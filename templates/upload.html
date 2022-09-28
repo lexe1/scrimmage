@@ -1,0 +1,10 @@
+{% for msg in messages %}
+    <div class="alert"> {{ msg }} </div>
+{% endfor %}    
+
+<form method='POST' action="{% url 'upload' %}" enctype="multipart/form-data">
+    {% csrf_token %} {{ form.as_p }}
+    <button value="Save">Submit</button>
+</form>
+
+<button><a href="{% url 'home' %}">Back to List</a></button>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ upload.title }}</title>
+</head>
+<body>
+
+    {% block content %} 
+    
+    <p class="card-text">Deatailed view for {{ upload.title|safe }}. Uploaded on {{ upload.uploaded_on }}</p> 
+    <button><a href="{% url 'home' %}">Back to List</a></button>
+
+    <p class="card-text">{{ upload.file|safe }}</p>
+
+    {% endblock %}
+    
+</body>
+</html>

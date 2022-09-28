@@ -1,0 +1,10 @@
+# create virtual env
+py -m venv venv
+venv/scripts/activate
+
+# django project and admin
+pip install django
+django-admin startproject website .
+py manage.py migrate
+py manage.py createsuperuser
+
