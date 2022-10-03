@@ -1,24 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrimmage List</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %} Home Page {% endblock %}
 
-    <h1>Scrimmage List:</h1>
+{% block content %}
 
     <button><a href="{% url 'upload' %}">New Upload</a></button>
 
+    <h2>List of latest uploads:</h2>
+
     <ul>
         {% for upload in upload_list %}
-            <li><a href="{{ upload.pk }}">{{ upload.title }}</a>; 
-                <br><small>{{ upload.uploaded_on }}</small></li>
+            <li><p><a href="{{ upload.pk }}">{{ upload.title }}</a>;
+                {{ upload.uploaded_on }}</p></li>
         {% endfor %} 
     </ul>
-
     
-</body>
-</html>
+{% endblock %}
