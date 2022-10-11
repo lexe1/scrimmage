@@ -1,13 +1,12 @@
 from django import forms
-from django.forms import ModelForm
 from .models import Upload
 
 
-class UploadForm(ModelForm):
-    title = forms.CharField()
-    # slug = forms.SlugField()
-    file = forms.FileField()
-
+class UploadForm(forms.ModelForm):
     class Meta:
         model = Upload
-        fields = ['title', 'file']
+        fields = ('title', 'file')
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'file': forms.FileInput(attrs={'class': 'form-control'}),
+        }

@@ -1,4 +1,6 @@
+from email.policy import default
 from django.db import models
+from django.urls import reverse
 
 
 class Upload(models.Model):
@@ -12,8 +14,12 @@ class Upload(models.Model):
     class Meta:
         ordering = ['-uploaded_on']
 
+    def get_absolute_url(self):
+        # return reverse('article-detail', args=(str(self.id)))
+        return reverse('home')
 
-class PlayerGameStats(models.Model):
+
+class Stat(models.Model):
     date = models.DateTimeField()
     player = models.CharField(max_length=255)
     min = models.FloatField()
@@ -33,3 +39,9 @@ class PlayerGameStats(models.Model):
     turnovers = models.IntegerField()
     blocks = models.IntegerField()
     # pts = models.FloatField()
+
+    class Meta:
+        ordering = ['date']
+
+    def __str__(self):
+        return self.player

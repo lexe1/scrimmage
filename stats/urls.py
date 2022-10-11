@@ -1,9 +1,16 @@
-from django.contrib import admin
-from django.urls import path, include
-from . import views
+from django.urls import path
+from .views import UploadDelete, UploadsList, UploadDetails, UploadDelete, upload_file, StatsList
+
 
 urlpatterns = [
-    path('', views.UploadList.as_view(), name='home'),
-    path('<str:pk>/', views.UploadDetails.as_view(), name='item'),
-    path('upload', views.upload_file, name='upload'),
+    path('', StatsList.as_view(), name='stats'),
+
+    # path('upload', UploadCreate.as_view(), name='upload'),
+
+    path('upload', upload_file, name='upload'),
+    path('uploads', UploadsList.as_view(), name='uploads'),
+    path('<str:pk>/', UploadDetails.as_view(), name='uploaded'),
+    path('<str:pk>/delete', UploadDelete.as_view(), name='delete-upload'),
+    # path('stats/<str:pk>', StatDetails.as_view(), name='stats-item'),
+
 ]

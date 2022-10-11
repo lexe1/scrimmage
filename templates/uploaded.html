@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %} Upload: {{ upload.title }}  {% endblock %}
+
+{% block content %}  
+    <br><br>
+    <h5>Scrimmage stats for '{{ upload.title|safe }}'' upload :</h5>
+    <hr><br>
+    <table id="myTable" class="table table-striped table-bordered text-center">
+        <tr class="table-dark">
+            <th onclick="sortTable(0)">#</th>
+            <th onclick="sortTable(1)">Date</th>
+            <th onclick="sortTable(2)">Player</th>
+            <th onclick="sortTable(3)">MIN</th>
+            <th onclick="sortTable(4)">2s</th>
+            <th onclick="sortTable(5)">A 2s</th>
+            <th onclick="sortTable(6)">3s</th>
+            <th onclick="sortTable(7)">A 3s</th>
+            <th onclick="sortTable(8)">FTs</th>
+            <th onclick="sortTable(9)">A FT</th>
+            <th onclick="sortTable(10)">REB O</th>
+            <th onclick="sortTable(11)">REB D</th>
+            <th onclick="sortTable(12)">A</th>
+            <th onclick="sortTable(13)">POA</th>
+            <th onclick="sortTable(14)">PF</th>
+            <th onclick="sortTable(15)">FD</th>
+            <th onclick="sortTable(16)">S</th>
+            <th onclick="sortTable(17)">TO</th>
+            <th onclick="sortTable(18)">B</th>
+        </tr>
+        {% for stat in stat_list %}
+        <tr>
+            <td>{{ stat.id }}</td>
+            <td>{{ stat.date|date:'m/d/y-h' }}</td>
+            <td>{{ stat.player }}</td>
+            <td>{{ stat.min }}</td>
+            <td>{{ stat.made_2 }}</td>
+            <td>{{ stat.attempts_2 }}</td>
+            <td>{{ stat.made_3 }}</td>
+            <td>{{ stat.attempts_3 }}</td>
+            <td>{{ stat.made_ft }}</td>
+            <td>{{ stat.attempts_ft }}</td>
+            <td>{{ stat.reb_o }}</td>
+            <td>{{ stat.reb_d }}</td>
+            <td>{{ stat.assist }}</td>
+            <td>{{ stat.poa }}</td>
+            <td>{{ stat.pf }}</td>
+            <td>{{ stat.fd }}</td>
+            <td>{{ stat.turnovers }}</td>
+    <!-- Why?? -->
+            <td>{{ stat.blocks }}</td>
+            <td>{{ stat.blocks }}</td>
+        </tr>
+        {% endfor %}  
+    </table>
+    <br>
+    <p class="card-text">'{{ upload.title|safe }}' was uploaded on {{ upload.uploaded_on }}</p> 
+    <a href="{% url 'delete-upload' upload.pk %}">Delete</a>
+    
+{% endblock %}

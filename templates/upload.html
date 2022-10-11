@@ -1,22 +1,18 @@
 {% extends 'base.html' %}
 {% block title %} Upload Page {% endblock %}
 
-
 {% block content %}
-
+    <br><br>
+    <h5>Upload a new excel file:</h1>
     {% for msg in messages %}
         <div class="alert"> {{ msg }} </div>
-    {% endfor %}    
-
-    <h2>Use a form below to upload a new excel file:</h1>
-
-    <form method='POST' action="{% url 'upload' %}" enctype="multipart/form-data">
-        {% csrf_token %} {{ form }}
-        <button value="Save">Submit</button>
-    </form>
-    
-    <br>
-
-    <button><a href="{% url 'home' %}">Back to List</a></button>
-
+    {% endfor %}
+    <div class="w-50 p-3">
+        <form method='POST' action="" enctype="multipart/form-data">
+            {% csrf_token %} 
+            {{ form.as_p }} 
+            <br>
+            <button class="btn btn-primary" value="Save">Submit</button>
+        </form>
+    </div>  
 {% endblock %}
