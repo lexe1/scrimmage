@@ -1,4 +1,5 @@
 # IDE specific
 .idea
 *.iml
-.venv
+.vscode
+venv
