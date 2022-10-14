@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% block title %} Home Page {% endblock %}
+{% block title %} List of Uploads {% endblock %}
 
 {% block content %}
    
     <br><br>
     <h5>List of latest uploads:</h5>
-    <br>
+    <hr><br>
     <ul>
         {% for upload in upload_list %}
             <li><p><a href="{{ upload.pk }}">{{ upload.title }}</a>;

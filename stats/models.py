@@ -1,4 +1,3 @@
-from email.policy import default
 from django.db import models
 from django.urls import reverse
 
@@ -19,7 +18,8 @@ class Upload(models.Model):
         return reverse('home')
 
 
-class Stat(models.Model):
+class StatLine(models.Model):
+    upload = models.ForeignKey(Upload, on_delete=models.CASCADE)
     date = models.DateTimeField()
     player = models.CharField(max_length=255)
     min = models.FloatField()

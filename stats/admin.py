@@ -1,5 +1,5 @@
 from django.contrib import admin
-from stats.models import Stat, Upload
+from stats.models import StatLine, Upload
 from django.conf.locale.es import formats as es_formats
 
 
@@ -23,4 +23,4 @@ class StatsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Upload, UploadAdmin)
-admin.site.register(Stat, StatsAdmin)
+admin.site.register(StatLine, StatsAdmin)
