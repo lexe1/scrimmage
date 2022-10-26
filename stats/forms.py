@@ -1,12 +1,11 @@
 from django import forms
-from .models import Upload
+from .models import Match, Upload
 
 
 class UploadForm(forms.ModelForm):
     class Meta:
         model = Upload
-        fields = ('title', 'file')
+        fields = ('file', )
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
             'file': forms.FileInput(attrs={'class': 'form-control'}),
         }

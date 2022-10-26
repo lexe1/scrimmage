@@ -1,5 +1,5 @@
 from django.contrib import admin
-from stats.models import StatLine, Upload
+from stats.models import StatLine, Upload, Match
 from django.conf.locale.es import formats as es_formats
 
 
@@ -7,9 +7,15 @@ es_formats.DATETIME_FORMAT = "m d y h"
 
 
 class UploadAdmin(admin.ModelAdmin):
-    list_display = ('title', 'uploaded_on', 'file', 'id')
-    list_filter = ('uploaded_on',)
-    search_fields = ['title', 'uploaded_on']
+    list_display = ('id', 'date', 'file')
+    list_filter = ('date', )
+    search_fields = ['date', ]
+
+
+class MatchAdmin(admin.ModelAdmin):
+    list_display = ('id', 'date')
+    list_filter = ('date', )
+    search_fields = ['date', ]
 
 
 class StatsAdmin(admin.ModelAdmin):
@@ -23,4 +29,5 @@ class StatsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Upload, UploadAdmin)
+admin.site.register(Match, MatchAdmin)
 admin.site.register(StatLine, StatsAdmin)

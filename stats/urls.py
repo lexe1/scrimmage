@@ -1,12 +1,11 @@
-from django.urls import path
-from .views import UploadDelete, UploadsList, UploadDelete, StatsList,  upload_file, uploaded_details
+from django.urls import path, include
+from .views import StatsList, upload, match_list, match_details, login
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
-    path('', StatsList.as_view(), name='stats'),
-    path('upload', upload_file, name='upload'),
-    path('uploads', UploadsList.as_view(), name='uploads'),
-    path('<int:pk>/', uploaded_details, name='uploaded'),
-    path('<int:pk>/delete', UploadDelete.as_view(), name='delete-upload'),
-
+    path('', StatsList.as_view(), name='home'),
+    path('upload', upload, name='upload'),
+    path('matches', match_list, name='matches'),
+    path('matches/<int:pk>', match_details, name='match'),
 ]
