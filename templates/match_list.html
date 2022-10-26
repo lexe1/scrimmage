@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %} List of Latest Matches {% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <br><br>
+    <h5>Latest Matches:</h5>
+    <hr><br>
+    <ul>
+        {% for match in matches %}
+            <li><a href="{% url 'match' match.pk %}">{{ match.date|date:'m-d-y #h' }}</a></li>
+        {% endfor %} 
+    </ul>
+{% else %}
+    <br>
+    <p>Please login to use this website.</p>
+{% endif %}
+    <br>
+{% endblock %}

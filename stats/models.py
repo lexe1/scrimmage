@@ -3,23 +3,34 @@ from django.urls import reverse
 
 
 class Upload(models.Model):
-    title = models.CharField(max_length=50, unique=True)
     file = models.FileField(upload_to='uploads')
-    uploaded_on = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return str(self.id)
 
     class Meta:
-        ordering = ['-uploaded_on']
+        ordering = ['-date']
 
     def get_absolute_url(self):
-        # return reverse('article-detail', args=(str(self.id)))
+        return reverse('home')
+
+
+class Match(models.Model):
+    date = models.DateTimeField()
+
+    def __str__(self):
+        return str(self.id)
+
+    class Meta:
+        ordering = ['-date']
+
+    def get_absolute_url(self):
         return reverse('home')
 
 
 class StatLine(models.Model):
-    upload = models.ForeignKey(Upload, on_delete=models.CASCADE)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
     date = models.DateTimeField()
     player = models.CharField(max_length=255)
     min = models.FloatField()
@@ -38,10 +49,38 @@ class StatLine(models.Model):
     steals = models.IntegerField()
     turnovers = models.IntegerField()
     blocks = models.IntegerField()
-    # pts = models.FloatField()
 
     class Meta:
         ordering = ['date']
 
     def __str__(self):
         return self.player
+
+    @property
+    def percentage_2(self):
+        if self.attempts_2 == 0:
+            return 0.0
+        x = float(self.made_2/self.attempts_2)
+        return (round(x, 2))
+
+    @property
+    def percentage_3(self):
+        if self.attempts_3 == 0:
+            return 0.0
+        x = float(self.made_3/self.attempts_3)
+        return (round(x, 2))
+
+    @property
+    def percentage_ft(self):
+        if self.attempts_ft == 0:
+            return 0.0
+        x = float(self.made_ft/self.attempts_ft)
+        return (round(x, 2))
+
+    @property
+    def reb_t(self):
+        x = int(self.reb_o) + int(self.reb_d)
+        return x
+
+    # @property
+    #   def pts(self):
