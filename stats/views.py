@@ -1,9 +1,11 @@
+from ast import Div
 from datetime import datetime, timezone
 
 import pandas
 import pytz
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
+from django.db.models import Sum
 
 from .forms import UploadForm
 from .models import Match, StatLine
@@ -15,9 +17,74 @@ def login(request):
     return render(request, 'login.html')
 
 
+def aggregation(request):
+    # from = request.args.forms
+    # to = request.args.to
+    queryset = StatLine.objects.all()
+    players = []
+    for stat in queryset:
+        x = stat.player
+        if x not in players:
+            players.append(x)
+    players_agg = []
+    for x in players:
+        agg_line = StatLine.objects.filter(player=x).aggregate(
+            sum_min=Sum('min'),
+            sum_made_2=Sum('made_2'),
+            sum_attempts_2=Sum('attempts_2'),
+
+            sum_made_3=Sum('made_3'),
+            sum_attempts_3=Sum('attempts_3'),
+
+            sum_made_ft=Sum('made_ft'),
+            sum_attempts_ft=Sum('attempts_ft'),
+
+            sum_reb_o=Sum('reb_o'),
+            sum_reb_d=Sum('reb_d'),
+
+            sum_assist=Sum('assist'),
+            sum_poa=Sum('poa'),
+            sum_pf=Sum('pf'),
+            sum_fd=Sum('fd'),
+            sum_steals=Sum('steals'),
+            sum_turnovers=Sum('turnovers'),
+            sum_blocks=Sum('blocks'),
+        )
+
+        agg_line['player'] = x
+        agg_line['sum_min'] = round(agg_line['sum_min'], 2)
+
+        agg_line['percentage_2'] = 0
+        if agg_line['sum_attempts_2'] != 0 and agg_line['sum_made_2'] != 0:
+            agg_line['percentage_2'] = agg_line['sum_made_2'] / \
+                agg_line['sum_attempts_2']
+            agg_line['percentage_2'] = round(agg_line['percentage_2'], 2)
+
+        agg_line['percentage_3'] = 0
+        if agg_line['sum_attempts_3'] != 0 and agg_line['sum_made_3'] != 0:
+            agg_line['percentage_3'] = agg_line['sum_made_3'] / \
+                agg_line['sum_attempts_3']
+            agg_line['percentage_3'] = round(agg_line['percentage_3'], 2)
+
+        agg_line['percentage_ft'] = 0
+        if agg_line['sum_attempts_ft'] != 0 and agg_line['sum_made_ft'] != 0:
+            agg_line['percentage_ft'] = agg_line['sum_made_ft'] / \
+                agg_line['sum_attempts_ft']
+            agg_line['percentage_ft'] = round(agg_line['percentage_ft'], 2)
+
+        agg_line['sum_reb_t'] = agg_line['sum_reb_o'] + agg_line['sum_reb_d']
+
+        players_agg.append(agg_line)
+
+    return render(request, 'aggregation.html', {
+        'players_agg': players_agg,
+    }
+    )
+
+
 class StatsList(ListView):
     queryset = StatLine.objects.all()
-    template_name = 'stats.html'
+    template_name = 'home.html'
     paginate_by = 50
 
 
@@ -40,8 +107,6 @@ def upload(request):
                         game_time = date[1]
                     dt = datetime.strptime(
                         f"{game_month} {game_date} 2022 {game_time}", '%b %d %Y %I')
-                    # utc_time = dt.replace(tzinfo=timezone.utc)
-                    # utc_timestamp = utc_time.timestamp()
                     match_date = {
                         'date': dt,
                     }
@@ -81,13 +146,6 @@ tz = pytz.timezone('Atlantic/Reykjavik')
 
 def match_list(request):
     matches = Match.objects.all()
-    # queryset = StatLine.objects.all()
-    # matches = []
-    # for stat in queryset:
-    #     date = stat.date
-    #     if date not in matches:
-    #         matches.append(date)
-    # dt = datetime.fromtimestamp(date, tz).strftime('%m-%d-%y MATCH %I')
     return render(request, 'match_list.html', {'matches': matches})
 
 
