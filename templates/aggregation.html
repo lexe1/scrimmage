@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
-{% block title %} Stats for: {{ match.date|date:'m-d-y #h' }}{% endblock %}
+{% block title %} Aggregation Page {% endblock %}
 
-{% block content %} 
+{% block content %}
 
 {% if user.is_authenticated %}
 <br><br>
-<h5>Stats for {{ match.date|date:'m-d-y #h' }} Match</h5>
-<hr><br>
+<h5>Summarized Stats for Players:</h5>
+<p>Based on All Existing Database Entries</p>
+<hr>
+<br>
 <table id="myTable" class="table table-striped table-bordered text-center">
     <tr class="table-dark">
-        <th onclick="sortTable(1)">#</th>
         <th onclick="sortTable(2)">Player</th>
         <th onclick="sortTable(3)">MIN</th>
         <th onclick="sortTable(4)">2s</th>
@@ -32,35 +33,35 @@
         <th onclick="sortTable(17)">TO</th>
         <th onclick="sortTable(18)">B</th>
     </tr>
-    {% for stat in queryset %}
+{% for player in players_agg %}
     <tr>
-        <td>{{ stat.id }}</td>       
-        <td>{{ stat.player }}</td>
-        <td>{{ stat.min }}</td>
-        <td>{{ stat.made_2 }}</td>
-        <td>{{ stat.attempts_2 }}</td>
-        <td>{{ stat.percentage_2 }}</td>
-        <td>{{ stat.made_3 }}</td>
-        <td>{{ stat.attempts_3 }}</td>
-        <td>{{ stat.percentage_3 }}</td>
-        <td>{{ stat.made_ft }}</td>
-        <td>{{ stat.attempts_ft }}</td>
-        <td>{{ stat.percentage_ft }}</td>
-        <td>{{ stat.reb_o }}</td>
-        <td>{{ stat.reb_d }}</td>
-        <td>{{ stat.reb_t }}</td>
-        <td>{{ stat.assist }}</td>
-        <td>{{ stat.poa }}</td>
-        <td>{{ stat.pf }}</td>
-        <td>{{ stat.fd }}</td>
-        <td>{{ stat.steals }}</td>
-        <td>{{ stat.turnovers }}</td>
-        <td>{{ stat.blocks }}</td>
+        <td>{{ player.player }}</td>
+        <td>{{ player.sum_min }}</td>
+        <td>{{ player.sum_made_2 }}</td>
+        <td>{{ player.sum_attempts_2 }}</td>
+        <td>{{ player.percentage_2 }}</td>
+        <td>{{ player.sum_made_3 }}</td>
+        <td>{{ player.sum_attempts_3 }}</td>
+        <td>{{ player.percentage_3 }}</td>
+        <td>{{ player.sum_made_ft }}</td>
+        <td>{{ player.sum_attempts_ft }}</td>
+        <td>{{ player.percentage_ft }}</td>
+        <td>{{ player.sum_reb_o }}</td>
+        <td>{{ player.sum_reb_d }}</td>
+        <td>{{ player.sum_reb_t }}</td>
+        <td>{{ player.sum_assist }}</td>
+        <td>{{ player.sum_poa }}</td>
+        <td>{{ player.sum_pf }}</td>
+        <td>{{ player.sum_fd }}</td>
+        <td>{{ player.sum_steals }}</td>
+        <td>{{ player.sum_turnovers }}</td>
+        <td>{{ player.sum_blocks }}</td>
     </tr>
-    {% endfor %}
+{% endfor %}
+</table>
+<br>
 {% else %}
     <br>
     <p>Please login to use this website.</p>
 {% endif %}
-
 {% endblock %}

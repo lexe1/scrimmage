@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% block title %} List of Latest Matches {% endblock %}
+{% block title %} Latest Matches {% endblock %}
 
 {% block content %}
 
 {% if user.is_authenticated %}
     <br><br>
-    <h5>Latest Matches:</h5>
+    <h5>Matches:</h5>
+    <p>From Latest to Earliest</p>
     <hr><br>
     <ul>
         {% for match in matches %}

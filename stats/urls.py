@@ -1,10 +1,10 @@
-from django.urls import path, include
-from .views import StatsList, upload, match_list, match_details, login
-from django.contrib.auth import views as auth_views
+from django.urls import path
+from .views import StatsList, aggregation, upload, match_list, match_details, aggregation
 
 
 urlpatterns = [
     path('', StatsList.as_view(), name='home'),
+    path('aggregation', aggregation, name='aggregation'),
     path('upload', upload, name='upload'),
     path('matches', match_list, name='matches'),
     path('matches/<int:pk>', match_details, name='match'),
