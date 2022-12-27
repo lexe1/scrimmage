@@ -2,7 +2,7 @@
 {% block title %} Upload Page {% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
+
     <br><br>
     <h5>Upload a new excel file:</h1>
     <hr>
@@ -17,8 +17,5 @@
             <button class="btn btn-primary" value="Save">Submit</button>
         </form>
     </div>
-{% else %}
-    <br>
-    <p>Please login to use this website.</p>
-{% endif %}
+
 {% endblock %}

@@ -3,7 +3,6 @@
 
 {% block content %} 
 
-{% if user.is_authenticated %}
 <br><br>
 <h5>Stats for {{ match.date|date:'m-d-y #h' }} Match</h5>
 <hr><br>
@@ -58,9 +57,5 @@
         <td>{{ stat.blocks }}</td>
     </tr>
     {% endfor %}
-{% else %}
-    <br>
-    <p>Please login to use this website.</p>
-{% endif %}
 
 {% endblock %}

@@ -1,25 +1,9 @@
-ARG PYTHON_VERSION=3.10-slim-buster
-
-FROM python:${PYTHON_VERSION}
-
-ENV PYTHONDONTWRITEBYTECODE 1
+FROM python:3.10-slim-buster
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir -p /app
-
 WORKDIR /app
+COPY requirements-linux.txt .
+RUN pip install -r requirements-linux.txt
+COPY . .
 
-COPY requirements.txt /tmp/requirements.txt
-
-RUN set -ex && \
-    pip install --upgrade pip && \
-    pip install -r /tmp/requirements.txt && \
-    rm -rf /root/.cache/
-
-COPY . /app/
-
-RUN python manage.py collectstatic --noinput
-
-EXPOSE 8000
-
-CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "website.wsgi"]
+CMD python manage.py runserver 0.0.0.0:8000

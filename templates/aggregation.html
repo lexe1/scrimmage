@@ -3,7 +3,6 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
 <br><br>
 <h5>Summarized Stats for Players:</h5>
 <p>Based on All Existing Database Entries</p>
@@ -60,8 +59,5 @@
 {% endfor %}
 </table>
 <br>
-{% else %}
-    <br>
-    <p>Please login to use this website.</p>
-{% endif %}
+
 {% endblock %}

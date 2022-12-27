@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+# from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_s2=%i(nv3+qg=zg$f6j+_6)%#x%s$^7aq_1k%gp(b+6@3)+@)'
+# SECRET_KEY = config('SCRIMMAGE_SECRET_KEY')
+SECRET_KEY = 'eafdF@8u2h9fu@9h2f@f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,24 +76,23 @@ WSGI_APPLICATION = 'website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': os.getenv('PG_USERNAME', 'lexe1'),
-        'PASSWORD': os.getenv('PG_PASSWORD', '1234'),
-        'HOST': os.getenv('PG_HOST', '127.0.0.1'),
-        'PORT': os.getenv('PG_PORT', '5432'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('SCRIMMAGE_NAME'),
+#         'USER': config('SCRIMMAGE_USER'),
+#         'PASSWORD': config('SCRIMMAGE_PASSWORD'),
+#         'HOST': config('SCRIMMAGE_HOST'),
+#         'PORT': config('SCRIMMAGE_PORT'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -124,9 +124,11 @@ TIME_ZONE = 'UTC'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = 'www/static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+MEDIA_URL = "/uploads/"
+MEDIA_ROOT = BASE_DIR / 'uploads'
 
 
 # Default primary key field type
@@ -137,4 +139,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev', 'https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev',
+                        'https://*.run.app', 'https://*.127.0.0.1']

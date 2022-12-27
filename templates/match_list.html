@@ -3,7 +3,6 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
     <br><br>
     <h5>Matches:</h5>
     <p>From Latest to Earliest</p>
@@ -13,9 +12,6 @@
             <li><a href="{% url 'match' match.pk %}">{{ match.date|date:'m-d-y #h' }}</a></li>
         {% endfor %} 
     </ul>
-{% else %}
-    <br>
-    <p>Please login to use this website.</p>
-{% endif %}
+
     <br>
 {% endblock %}

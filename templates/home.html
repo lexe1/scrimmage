@@ -3,7 +3,7 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
+
 <br><br>
 <h5>Alltime Stats:</h5>
 <p>Full List of Database Entries Uploaded</p>
@@ -82,8 +82,4 @@
         {% endif %}
     </span>
 </div>
-{% else %}
-    <br>
-    <p>Please login to use this website.</p>
-{% endif %}
 {% endblock %}
